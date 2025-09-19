@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/main_cicle"
-        android:text="@string/cicle"
+        android:text="@string/cicle_0"
         android:textSize="15sp"
         android:textColor="@color/white"
         android:layout_width="wrap_content"

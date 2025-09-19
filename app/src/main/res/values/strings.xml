@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Pomodoro</string>
     <string name="start">Start</string>
-    <string name="cicle">Pomodoro</string>
+    <string name="pause">Pause</string>
+    <string name="cicle_0">Pomodoro</string>
+    <string name="cicle_1">Short Break</string>
+    <string name="cicle_2">Long Break</string>
     <string name="timer">00:00</string>
 </resources>
