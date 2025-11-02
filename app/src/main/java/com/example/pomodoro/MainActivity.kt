@@ -14,7 +14,7 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mainLayout: ConstraintLayout
+   /* private lateinit var mainLayout: ConstraintLayout
     private lateinit var cicleTxt: TextView
     private lateinit var timerTxt: TextView
     private lateinit var startTxt: TextView
@@ -23,8 +23,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var countDownTimer: CountDownTimer
     private var isRunning: Boolean = false
     private var time: Int = 1
-    private var timeProgress = 0
+    private var timeLeft: Int = 0
 
+    */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        mainLayout = findViewById(R.id.main)
+        /*mainLayout = findViewById(R.id.main)
         cicleTxt = findViewById(R.id.main_cicle)
         timerTxt = findViewById(R.id.main_timer)
         startTxt = findViewById(R.id.main_start)
@@ -43,22 +44,27 @@ class MainActivity : AppCompatActivity() {
         startTxt.setOnClickListener {
             startTimer()
         }
+         */
     }
+
+    /*
 
     private fun timer(){
 
         isRunning = true
 
-        countDownTimer = object: CountDownTimer((time*60010).toLong(), 1000){
+        countDownTimer = object: CountDownTimer((time*60000).toLong(), 1000){
             override fun onTick(millisUntilFinished: Long) {
 
-                timeFormat(millisUntilFinished)
-                progressBar.max = time*60010
+
+                timeLeft = time - (millisUntilFinished/60000).toInt()
+                progressBar.max = time*60000
                 progressBar.progress = millisUntilFinished.toInt()
+                timeFormat(millisUntilFinished)
             }
 
             override fun onFinish() {
-                    shortBreak()
+                shortBreak()
             }
 
         }.start()
@@ -95,4 +101,5 @@ class MainActivity : AppCompatActivity() {
         startTxt.text = getString(R.string.start)
         isRunning = false
     }
+    */
 }
