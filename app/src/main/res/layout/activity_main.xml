@@ -11,14 +11,15 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         tools:layout ="@layout/fragment_timer"
-        android:name="com.example.pomodoro.ShortBreakFragment"
+        android:name="com.example.pomodoro.TimerFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <ImageView
+        android:id="@+id/main_settings_btn"
         android:src="@drawable/baseline_settings_icon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_margin="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
