@@ -2,6 +2,7 @@
     <string name="app_name">Pomodoro</string>
     <string name="start">Start</string>
     <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
     <string name="txt_timer">Pomodoro</string>
     <string name="txt_shortBreak">Short Break</string>
     <string name="txt_longBreak">Long Break</string>
