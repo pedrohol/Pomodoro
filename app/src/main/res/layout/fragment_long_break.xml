@@ -64,4 +64,15 @@
         app:layout_constraintTop_toBottomOf="@id/longBreak_progressbar"
         app:layout_constraintVertical_bias="0.152" />
 
+    <ImageView
+        android:id="@+id/longBreak_skip_buttom"
+        android:visibility="gone"
+        android:src="@drawable/baseline_skip_next"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="14dp"
+        app:layout_constraintStart_toEndOf="@id/longBreak_start_txt"
+        app:layout_constraintTop_toTopOf="@id/longBreak_start_txt"
+        app:layout_constraintBottom_toBottomOf="@id/longBreak_start_txt"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
