@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/blue">
+
+    <ProgressBar
+        android:id="@+id/shortBreak_progressbar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:progress="100"
+        android:rotation="-90"
+        android:progressDrawable="@drawable/progressbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.301" />
+
+    <TextView
+        android:id="@+id/shortBreak_cicle_txt"
+        android:text="@string/txt_shortBreak"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/shortBreak_progressbar"
+        app:layout_constraintBottom_toTopOf="@id/shortBreak_timer_txt"
+        app:layout_constraintStart_toStartOf="@id/shortBreak_progressbar"
+        app:layout_constraintEnd_toEndOf="@id/shortBreak_progressbar"
+        android:layout_marginTop="30dp"/>
+
+    <TextView
+        android:id="@+id/shortBreak_timer_txt"
+        android:text="@string/timer"
+        android:textColor="@color/white"
+        android:textSize="60sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/shortBreak_progressbar"
+        app:layout_constraintEnd_toEndOf="@id/shortBreak_progressbar"
+        app:layout_constraintTop_toTopOf="@id/shortBreak_progressbar"
+        app:layout_constraintBottom_toBottomOf="@id/shortBreak_progressbar"
+        />
+
+    <TextView
+        android:id="@+id/shortBreak_start_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shortBreak_progressbar"
+        app:layout_constraintVertical_bias="0.152" />
+
+    <ImageView
+        android:id="@+id/shortBreak_skip_buttom"
+        android:visibility="gone"
+        android:src="@drawable/baseline_skip_next"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="14dp"
+        app:layout_constraintStart_toEndOf="@id/shortBreak_start_txt"
+        app:layout_constraintTop_toTopOf="@id/shortBreak_start_txt"
+        app:layout_constraintBottom_toBottomOf="@id/shortBreak_start_txt"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
