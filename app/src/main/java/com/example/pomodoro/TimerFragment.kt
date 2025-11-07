@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.pomodoro.databinding.FragmentTimerBinding
@@ -16,9 +17,15 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
 
     private var binding: FragmentTimerBinding? = null
 
+    private var cicleController: CicleController? = null
+
     private lateinit var countDownTimer: CountDownTimer
 
-    private var time: Int = 1
+    companion object {
+        var cicle = 0
+    }
+
+    private var time: Int = 30
     private val seconds: Int = 0
     private var timeLeft: Long = 0
     private var timeProgress: Int = 0
@@ -66,7 +73,15 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
             }
 
             override fun onFinish() {
+                cicle += 1
 
+                if (cicle < 4){
+                    cicleController?.goToShortBreakScreen(ShortBreakFragment())
+                } else {
+                    cicle = 0
+                    cicleController?.goToLongBreakScreen(LongBreakFragment())
+                }
+                //Toast.makeText(requireContext(), "Short Break Time!", Toast.LENGTH_LONG).show()
             }
 
         }.start()
@@ -101,6 +116,13 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
         binding?.timerStartTxt?.text = getString(R.string.pause)
         binding?.skipButtom?.visibility = View.VISIBLE
         resumeEnable = false
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is CicleController) {
+            cicleController = context
+        }
     }
 
     override fun onDestroy() {

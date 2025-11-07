@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.pomodoro.databinding.ActivityMainBinding
 import java.util.Locale
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CicleController {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -34,5 +34,25 @@ class MainActivity : AppCompatActivity() {
            val dialog = SettingDialogFragment()
            dialog.show(supportFragmentManager, dialog.tag)
        }
+
     }
+
+    override fun goToTimerScreen(fragment: TimerFragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
+
+    override fun goToShortBreakScreen(fragment: ShortBreakFragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
+
+    override fun goToLongBreakScreen(fragment: LongBreakFragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
+
 }
