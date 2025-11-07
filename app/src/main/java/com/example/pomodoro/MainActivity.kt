@@ -1,21 +1,12 @@
 package com.example.pomodoro
 
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet.Constraint
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.example.pomodoro.databinding.ActivityMainBinding
-import java.util.Locale
 
-class MainActivity : AppCompatActivity(), CicleController {
+class MainActivity : AppCompatActivity(), CycleController {
 
     private lateinit var binding: ActivityMainBinding
 

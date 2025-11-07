@@ -3,9 +3,7 @@ package com.example.pomodoro
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.pomodoro.databinding.FragmentShortBreakBinding
@@ -15,7 +13,7 @@ class ShortBreakFragment: Fragment(R.layout.fragment_short_break) {
 
     private var binding: FragmentShortBreakBinding? = null
 
-    private var cicleController: CicleController? = null
+    private var cycleController: CycleController? = null
 
     private lateinit var countDownTimer: CountDownTimer
 
@@ -64,7 +62,7 @@ class ShortBreakFragment: Fragment(R.layout.fragment_short_break) {
             }
 
             override fun onFinish() {
-                cicleController?.goToTimerScreen(TimerFragment())
+                cycleController?.goToTimerScreen(TimerFragment())
             }
         }.start()
     }
@@ -102,8 +100,8 @@ class ShortBreakFragment: Fragment(R.layout.fragment_short_break) {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is CicleController) {
-            cicleController = context
+        if (context is CycleController) {
+            cycleController = context
         }
     }
 

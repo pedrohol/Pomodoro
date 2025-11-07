@@ -3,11 +3,7 @@ package com.example.pomodoro
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.pomodoro.databinding.FragmentTimerBinding
@@ -17,12 +13,12 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
 
     private var binding: FragmentTimerBinding? = null
 
-    private var cicleController: CicleController? = null
+    private var cycleController: CycleController? = null
 
     private lateinit var countDownTimer: CountDownTimer
 
     companion object {
-        var cicle = 0
+        var cycle = 0
     }
 
     private var time: Int = 30
@@ -40,8 +36,7 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
 
         activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.orange)
 
-        val timeFormat = String.format(Locale.getDefault(), "%02d:%02d", time, seconds)
-        binding?.timerTimer?.text = timeFormat
+        setTimeText(time)
 
         binding?.timerStartTxt?.setOnClickListener {
 
@@ -73,13 +68,13 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
             }
 
             override fun onFinish() {
-                cicle += 1
+                cycle += 1
 
-                if (cicle < 4){
-                    cicleController?.goToShortBreakScreen(ShortBreakFragment())
+                if (cycle < 4){
+                    cycleController?.goToShortBreakScreen(ShortBreakFragment())
                 } else {
-                    cicle = 0
-                    cicleController?.goToLongBreakScreen(LongBreakFragment())
+                    cycle = 0
+                    cycleController?.goToLongBreakScreen(LongBreakFragment())
                 }
                 //Toast.makeText(requireContext(), "Short Break Time!", Toast.LENGTH_LONG).show()
             }
@@ -118,10 +113,15 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
         resumeEnable = false
     }
 
+    private fun setTimeText (time: Int){
+        val timeFormat = String.format(Locale.getDefault(), "%02d:%02d", time, seconds)
+        binding?.timerTimer?.text = timeFormat
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is CicleController) {
-            cicleController = context
+        if (context is CycleController) {
+            cycleController = context
         }
     }
 

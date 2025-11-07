@@ -1,6 +1,6 @@
 package com.example.pomodoro
 
-interface CicleController {
+interface CycleController {
 
     fun goToTimerScreen(fragment: TimerFragment)
 

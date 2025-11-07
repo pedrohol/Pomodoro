@@ -12,13 +12,14 @@ import java.util.Locale
 
 class SettingDialogFragment: DialogFragment(R.layout.dialog_settings) {
 
-    var binding: DialogSettingsBinding? = null
+    private var binding: DialogSettingsBinding? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = DialogSettingsBinding.bind(view)
 
         binding?.dialogButton?.setOnClickListener {
+            var minutes = binding?.dialogTimerEditText?.text.toString().toInt()
             dismiss()
         }
     }
