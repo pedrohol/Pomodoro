@@ -12,21 +12,6 @@ O aplicativo consiste em um timer no centro da tela, controlado por um botão co
 
 - Pula para o proximo ciclo.
 
-## Pomodoro Cycle
-O aplicativo possui 3 diferentes ciclos. Assim que o temporizador chega a zero, o novo ciclo se inicia. 
-
-**Pomodoro**
-
-- Um timer de 30 minutos. Iniciando um ciclo Pomodoro.
-
-**Short Break** 
-
-- Um timer de 5 minutos. Carregado ao fim de um ciclo Pomodoro
-
-**Long Break**
-
-- Um timer de 15 minutos, Carregado ao fim de 4 ciclos Pomodoro.
-
 ## Screenshots
 <img
   width = "250px"
@@ -40,6 +25,21 @@ O aplicativo possui 3 diferentes ciclos. Assim que o temporizador chega a zero, 
   width = "250px"
   src="https://i.imgur.com/O2Q7Xko.jpeg"
   />
+
+ ## Pomodoro Cycle
+O aplicativo possui 3 diferentes ciclos. Assim que o temporizador chega a zero, o novo ciclo se inicia. 
+
+**Pomodoro**
+
+- Um timer de 30 minutos. Iniciando um ciclo Pomodoro.
+
+**Short Break** 
+
+- Um timer de 5 minutos. Carregado ao fim de um ciclo Pomodoro
+
+**Long Break**
+
+- Um timer de 15 minutos, Carregado ao fim de 4 ciclos Pomodoro.
 
 ## Tech Stack
 <p><strong>Linguagem de Programação</strong></p>
