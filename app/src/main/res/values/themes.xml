@@ -6,5 +6,11 @@
         <item name="android:statusBarColor">@color/orange</item>
     </style>
 
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/orange</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/pomodoro_white_icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.Pomodoro</item>
+    </style>
+
     <style name="Theme.Pomodoro" parent="Base.Theme.Pomodoro" />
 </resources>

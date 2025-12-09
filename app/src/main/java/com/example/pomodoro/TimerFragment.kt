@@ -6,6 +6,7 @@ import android.os.CountDownTimer
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.pomodoro.databinding.FragmentTimerBinding
 import java.util.Locale
 
@@ -20,8 +21,7 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
     companion object {
         var cycle = 0
     }
-
-    private var time: Int = 30
+    private var time = 30
     private val seconds: Int = 0
     private var timeLeft: Long = 0
     private var timeProgress: Int = 0
