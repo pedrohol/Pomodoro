@@ -41,6 +41,10 @@ O aplicativo possui 3 diferentes ciclos. Assim que o temporizador chega a zero, 
   src="https://i.imgur.com/O2Q7Xko.jpeg"
   />
 
+## App Icon
+<a href="https://www.flaticon.com/free-icons/time-optimization" title="time optimization icons">Time optimization icons created by Freepik - Flaticon</a>
+
+
 ## Tech Stack
 <p><strong>Linguagem de Programação</strong></p>
 <ul>
