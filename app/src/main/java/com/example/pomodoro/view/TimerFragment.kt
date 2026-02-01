@@ -48,27 +48,34 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
 
         binding?.timerStartTxt?.setOnClickListener {
 
-            if (!isRunning && !resumeEnable) {
-                binding?.skipButtom?.visibility = View.VISIBLE
-                binding?.timerStartTxt?.text = getString(R.string.pause)
-                isRunning = true
-                viewModel.startTimer()
-            }
+            when {
+                !isRunning && !resumeEnable -> {
+                    binding?.skipButtom?.visibility = View.VISIBLE
+                    binding?.timerStartTxt?.text = getString(R.string.pause)
+                    isRunning = true
+                    viewModel.startTimer()
+                    Log.i("TESTE", "start")
+                }
 
-            if (isRunning && !resumeEnable) {
-                binding?.timerStartTxt?.text = getString(R.string.resume)
-                binding?.skipButtom?.visibility = View.GONE
-                resumeEnable = true
-                isRunning = false
-                viewModel.timerPause()
-            }
+                isRunning && !resumeEnable -> {
+                    binding?.timerStartTxt?.text = getString(R.string.resume)
+                    binding?.skipButtom?.visibility = View.GONE
+                    resumeEnable = true
+                    isRunning = false
+                    viewModel.timerPause()
+                    Log.i("TESTE", "pause")
+                }
 
-            if (resumeEnable) {
-                binding?.timerStartTxt?.text = getString(R.string.pause)
-                binding?.skipButtom?.visibility = View.VISIBLE
-                resumeEnable = false
-                isRunning = true
-                viewModel.timerResume()
+                resumeEnable -> {
+                    binding?.timerStartTxt?.text = getString(R.string.pause)
+                    binding?.skipButtom?.visibility = View.VISIBLE
+                    resumeEnable = false
+                    isRunning = true
+                    viewModel.timerResume()
+                    Log.i("TESTE", "resume")
+                }
+
+
             }
 
         }

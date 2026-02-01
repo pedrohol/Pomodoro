@@ -33,6 +33,9 @@ class CycleViewModel: ViewModel() {
     private val finishTimer = MutableSharedFlow<Unit>()
     var sharedFinishTimer = finishTimer.asSharedFlow()
 
+    private var isPaused: Boolean = false
+
+
     companion object {
         val setTimer = MutableLiveData<Int>()
         val setShort = MutableLiveData<Int>()
@@ -56,21 +59,24 @@ class CycleViewModel: ViewModel() {
 
         countDownTimer = object: CountDownTimer(timeLenght, 1000){
             override fun onTick(millisUntilFinished: Long) {
-
                 timeLeft = millisUntilFinished
                 timeProgress = millisUntilFinished.toInt()
                 timerProgress.value = millisUntilFinished
                 progressBar.value = timeProgress
-
             }
 
             override fun onFinish() {
+                timeLeft = 0
+                isPaused = false
                 viewModelScope.launch {
                     finishTimer.emit(Unit)
                 }
             }
 
         }.start()
+
+        isPaused = false
+
     }
 
     fun setTimer(time: Int) {
@@ -89,27 +95,42 @@ class CycleViewModel: ViewModel() {
     fun startTimer() {
         val minutes = setTimer.value
         var time = (minutes * 60000).toLong()
+        timeLeft = time
         timer(time)
     }
 
     fun startShort() {
         val minutes = setShort.value
         var time = (minutes * 60000).toLong()
+        timeLeft = time
         timer(time)
     }
 
     fun startLong() {
         val minutes = setLong.value
         var time = (minutes * 60000).toLong()
+        timeLeft = time
         timer(time)
     }
 
     fun timerPause() {
-        countDownTimer?.cancel()
-        countDownTimer = null
+        if (!isPaused) {
+            countDownTimer?.cancel()
+            countDownTimer = null
+            isPaused = true
+        }
+
     }
     fun timerResume() {
-        timer(timeLeft)
+        if (isPaused && timeLeft > 0) {
+            timer(timeLeft)
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        countDownTimer?.cancel()
+        countDownTimer = null
     }
 
 }
