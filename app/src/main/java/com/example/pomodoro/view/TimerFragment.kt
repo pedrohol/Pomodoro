@@ -2,7 +2,6 @@ package com.example.pomodoro.view
 
 import android.content.Context
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -15,6 +14,8 @@ import com.example.pomodoro.databinding.FragmentTimerBinding
 import com.example.pomodoro.viewModel.CycleViewModel
 import kotlinx.coroutines.launch
 import java.util.Locale
+import android.media.Ringtone
+import android.media.RingtoneManager
 
 class TimerFragment: Fragment(R.layout.fragment_timer) {
 
@@ -27,8 +28,6 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
     companion object {
         var cycle = 0
     }
-
-
     private val seconds: Int = 0
     private var isRunning: Boolean = false
     private var resumeEnable: Boolean = false
