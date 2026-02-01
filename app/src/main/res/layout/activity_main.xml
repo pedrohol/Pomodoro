@@ -12,7 +12,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         tools:layout ="@layout/fragment_timer"
-        android:name="com.example.pomodoro.TimerFragment"
+        android:name="com.example.pomodoro.view.TimerFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

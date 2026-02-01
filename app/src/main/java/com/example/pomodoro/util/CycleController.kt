@@ -1,4 +1,8 @@
-package com.example.pomodoro
+package com.example.pomodoro.util
+
+import com.example.pomodoro.view.LongBreakFragment
+import com.example.pomodoro.view.ShortBreakFragment
+import com.example.pomodoro.view.TimerFragment
 
 interface CycleController {
 
