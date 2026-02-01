@@ -86,14 +86,14 @@ class LongBreakFragment: Fragment(R.layout.fragment_long_break) {
             binding?.longBreakProgressbar?.progress = progress
         }
 
-        viewModel.setTimerTxt.observe(viewLifecycleOwner) { timer ->
+        viewModel.setLongTxt.observe(viewLifecycleOwner) { timer ->
             setTimeText(timer)
             val progress = timer * 60000
             binding?.longBreakProgressbar?.max = progress
             binding?.longBreakProgressbar?.progress = progress
         }
 
-        viewModel.setTimerTxt.observe(viewLifecycleOwner) { timer ->
+        viewModel.setLongTxt.observe(viewLifecycleOwner) { timer ->
             setTimeText(timer)
         }
 

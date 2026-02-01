@@ -26,6 +26,8 @@ class CycleViewModel: ViewModel() {
     private var timeLeft: Long = 0
 
     val setTimerTxt: LiveData<Int> = setTimer
+    val setShortTxt: LiveData<Int> = setShort
+    val setLongTxt: LiveData<Int> = setLong
 
     private val timerProgress = MutableLiveData<Long>()
     val liveTimerProgress: LiveData<Long> = timerProgress

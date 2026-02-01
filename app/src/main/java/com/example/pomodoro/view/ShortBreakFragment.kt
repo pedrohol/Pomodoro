@@ -89,14 +89,14 @@ class ShortBreakFragment: Fragment(R.layout.fragment_short_break) {
             binding?.shortBreakProgressbar?.progress = progress
         }
 
-        viewModel.setTimerTxt.observe(viewLifecycleOwner) { timer ->
+        viewModel.setShortTxt.observe(viewLifecycleOwner) { timer ->
             setTimeText(timer)
             val progress = timer * 60000
             binding?.shortBreakProgressbar?.max = progress
             binding?.shortBreakProgressbar?.progress = progress
         }
 
-        viewModel.setTimerTxt.observe(viewLifecycleOwner) { timer ->
+        viewModel.setShortTxt.observe(viewLifecycleOwner) { timer ->
             setTimeText(timer)
         }
 
