@@ -28,16 +28,12 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), CycleController {
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: CycleViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-<<<<<<< HEAD
         Thread.sleep(2000)
         installSplashScreen()
 
-=======
->>>>>>> dialog_menu
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
