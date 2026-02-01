@@ -8,10 +8,12 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.pomodoro.CycleController
+import androidx.lifecycle.viewModelScope
+import com.example.pomodoro.util.CycleController
 import com.example.pomodoro.R
 import com.example.pomodoro.databinding.FragmentTimerBinding
 import com.example.pomodoro.viewModel.CycleViewModel
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class TimerFragment: Fragment(R.layout.fragment_timer) {
@@ -26,7 +28,7 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
         var cycle = 0
     }
 
-    private var timeProgress: Int = 0
+
     private val seconds: Int = 0
     private var isRunning: Boolean = false
     private var resumeEnable: Boolean = false
@@ -75,7 +77,6 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
                     Log.i("TESTE", "resume")
                 }
 
-
             }
 
         }
@@ -107,6 +108,12 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
 
         viewModel.setTimerTxt.observe(viewLifecycleOwner) { timer ->
             setTimeText(timer)
+        }
+
+        viewModel.viewModelScope.launch {
+            viewModel.sharedFinishTimer.collect {
+                cycle()
+            }
         }
 
     }

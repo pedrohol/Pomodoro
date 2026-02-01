@@ -3,25 +3,29 @@ package com.example.pomodoro.view
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.pomodoro.CycleController
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
+import com.example.pomodoro.util.CycleController
 import com.example.pomodoro.R
 import com.example.pomodoro.databinding.FragmentShortBreakBinding
+import com.example.pomodoro.viewModel.CycleViewModel
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class ShortBreakFragment: Fragment(R.layout.fragment_short_break) {
 
     private var binding: FragmentShortBreakBinding? = null
+
     private var cycleController: CycleController? = null
 
-    private lateinit var countDownTimer: CountDownTimer
+    private val viewModel: CycleViewModel by viewModels()
 
-    private var time: Int = 5
     private val seconds: Int = 0
-    private var timeLeft: Long = 0
-    private var timeProgress: Int = 0
     private var isRunning: Boolean = false
     private var resumeEnable: Boolean = false
 
@@ -32,71 +36,85 @@ class ShortBreakFragment: Fragment(R.layout.fragment_short_break) {
 
         activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.blue)
 
-        val timeFormat = String.format(Locale.getDefault(), "%02d:%02d", time, seconds)
-        binding?.shortBreakTimerTxt?.text = timeFormat
+        setupListeners()
+        setupObeservers()
+
+    }
+
+    private fun setupListeners() {
 
         binding?.shortBreakStartTxt?.setOnClickListener {
 
-            if (!isRunning && !resumeEnable) {
-                timerStart(time)
-            } else if (isRunning && !resumeEnable) {
-                timerPause()
-            } else if (resumeEnable) {
-                timerResume()
+            when {
+                !isRunning && !resumeEnable -> {
+                    binding?.shortBreakSkipButtom?.visibility = View.VISIBLE
+                    binding?.shortBreakStartTxt?.text = getString(R.string.pause)
+                    isRunning = true
+                    viewModel.startShort()
+                }
+
+                isRunning && !resumeEnable -> {
+                    binding?.shortBreakStartTxt?.text = getString(R.string.resume)
+                    binding?.shortBreakSkipButtom?.visibility = View.GONE
+                    resumeEnable = true
+                    isRunning = false
+                    viewModel.timerPause()
+                }
+
+                resumeEnable -> {
+                    binding?.shortBreakStartTxt?.text = getString(R.string.pause)
+                    binding?.shortBreakSkipButtom?.visibility = View.VISIBLE
+                    resumeEnable = false
+                    isRunning = true
+                    viewModel.timerResume()
+                }
             }
         }
 
         binding?.shortBreakSkipButtom?.setOnClickListener {
-            countDownTimer.onFinish()
+            onFinish()
         }
+
     }
 
-    private fun timer (timeLenght: Long) {
-        isRunning = true
+    fun setupObeservers() {
+        viewModel.liveTimerProgress.observe(viewLifecycleOwner) { progress ->
+            val minutes = (progress/1000).toInt() / 60
+            val seconds = (progress/1000).toInt() % 60
+            val timeFormated = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+            binding?.shortBreakTimerTxt?.text = timeFormated
+        }
 
-        countDownTimer = object: CountDownTimer(timeLenght, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                timeLeft = millisUntilFinished
-                timeProgress = millisUntilFinished.toInt()
-                binding?.shortBreakProgressbar?.progress = timeProgress
-                timeFormat(millisUntilFinished)
+        viewModel.liveProgressBar.observe(viewLifecycleOwner) { progress ->
+            binding?.shortBreakProgressbar?.progress = progress
+        }
+
+        viewModel.setTimerTxt.observe(viewLifecycleOwner) { timer ->
+            setTimeText(timer)
+            val progress = timer * 60000
+            binding?.shortBreakProgressbar?.max = progress
+            binding?.shortBreakProgressbar?.progress = progress
+        }
+
+        viewModel.setTimerTxt.observe(viewLifecycleOwner) { timer ->
+            setTimeText(timer)
+        }
+
+        viewModel.viewModelScope.launch {
+            viewModel.sharedFinishTimer.collect {
+                onFinish()
             }
+        }
 
-            override fun onFinish() {
-                cycleController?.goToTimerScreen(TimerFragment())
-            }
-        }.start()
     }
 
-    private fun timeFormat (millisUntilFinished: Long) {
-        val minutes = (millisUntilFinished / 1000).toInt() / 60
-        val seconds = (millisUntilFinished / 1000).toInt() % 60
-        val timeFormated = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-        binding?.shortBreakTimerTxt?.text = timeFormated
+    private fun setTimeText (time: Int) {
+        val timeFormat = String.format(Locale.getDefault(), "%02d:%02d", time, seconds)
+        binding?.shortBreakTimerTxt?.text = timeFormat
     }
 
-    private fun timerStart(minutes: Int) {
-        var time = (minutes * 60000).toLong()
-        timer(time)
-
-        binding?.shortBreakProgressbar?.max = time.toInt()
-        binding?.shortBreakSkipButtom?.visibility = View.VISIBLE
-        binding?.shortBreakStartTxt?.text = getString(R.string.pause)
-    }
-
-    private fun timerPause() {
-        countDownTimer.cancel()
-        binding?.shortBreakStartTxt?.text = getString(R.string.resume)
-        binding?.shortBreakSkipButtom?.visibility = View.GONE
-        resumeEnable = true
-        isRunning = false
-    }
-
-    private fun timerResume() {
-        timer(timeLeft)
-        binding?.shortBreakStartTxt?.text = getString(R.string.pause)
-        binding?.shortBreakSkipButtom?.visibility = View.VISIBLE
-        resumeEnable = false
+    private fun onFinish() {
+        cycleController?.goToTimerScreen(TimerFragment())
     }
 
     override fun onAttach(context: Context) {
