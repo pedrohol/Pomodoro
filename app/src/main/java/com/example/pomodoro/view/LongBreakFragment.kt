@@ -1,4 +1,4 @@
-package com.example.pomodoro
+package com.example.pomodoro.view
 
 import android.content.Context
 import android.os.Bundle
@@ -6,39 +6,37 @@ import android.os.CountDownTimer
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.pomodoro.databinding.FragmentTimerBinding
+import com.example.pomodoro.CycleController
+import com.example.pomodoro.R
+import com.example.pomodoro.databinding.FragmentLongBreakBinding
 import java.util.Locale
 
-class TimerFragment: Fragment(R.layout.fragment_timer) {
+class LongBreakFragment: Fragment(R.layout.fragment_long_break) {
 
-    private var binding: FragmentTimerBinding? = null
+    private var binding: FragmentLongBreakBinding? = null
 
     private var cycleController: CycleController? = null
 
     private lateinit var countDownTimer: CountDownTimer
 
-    companion object {
-        var cycle = 0
-    }
-
-    private var time: Int = 30
+    private var time: Int = 15
     private val seconds: Int = 0
     private var timeLeft: Long = 0
     private var timeProgress: Int = 0
     private var isRunning: Boolean = false
     private var resumeEnable: Boolean = false
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentTimerBinding.bind(view)
+        binding = FragmentLongBreakBinding.bind(view)
 
-        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.orange)
+        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.dark_blue)
 
-        setTimeText(time)
+        val timeFormat = String.format(Locale.getDefault(), "%02d:%02d", time, seconds)
+        binding?.longBreakTimerTxt?.text = timeFormat
 
-        binding?.timerStartTxt?.setOnClickListener {
+        binding?.longBreakStartTxt?.setOnClickListener {
 
             if (!isRunning && !resumeEnable) {
                 timerStart(time)
@@ -49,73 +47,57 @@ class TimerFragment: Fragment(R.layout.fragment_timer) {
             }
         }
 
-        binding?.skipButtom?.setOnClickListener {
+        binding?.longBreakSkipButtom?.setOnClickListener {
             countDownTimer.onFinish()
         }
-
     }
 
     private fun timer (timeLenght: Long) {
         isRunning = true
 
-        countDownTimer = object: CountDownTimer(timeLenght, 1000){
+        countDownTimer = object: CountDownTimer(timeLenght, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-
                 timeLeft = millisUntilFinished
                 timeProgress = millisUntilFinished.toInt()
-                binding?.timerProgressbar?.progress = timeProgress
+                binding?.longBreakProgressbar?.progress = timeProgress
                 timeFormat(millisUntilFinished)
             }
 
             override fun onFinish() {
-                cycle += 1
-
-                if (cycle < 4){
-                    cycleController?.goToShortBreakScreen(ShortBreakFragment())
-                } else {
-                    cycle = 0
-                    cycleController?.goToLongBreakScreen(LongBreakFragment())
-                }
-                //Toast.makeText(requireContext(), "Short Break Time!", Toast.LENGTH_LONG).show()
+                cycleController?.goToTimerScreen(TimerFragment())
             }
-
         }.start()
     }
 
     private fun timeFormat (millisUntilFinished: Long) {
-        val minutes = (millisUntilFinished/1000).toInt() / 60
-        val seconds = (millisUntilFinished/1000).toInt() % 60
+        val minutes = (millisUntilFinished / 1000).toInt() / 60
+        val seconds = (millisUntilFinished / 1000).toInt() % 60
         val timeFormated = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-        binding?.timerTimer?.text = timeFormated
+        binding?.longBreakTimerTxt?.text = timeFormated
     }
 
-    private fun timerStart(minutes: Int) {
+    private fun timerStart (minutes: Int) {
         var time = (minutes * 60000).toLong()
         timer(time)
 
-        binding?.timerProgressbar?.max = time.toInt()
-        binding?.skipButtom?.visibility = View.VISIBLE
-        binding?.timerStartTxt?.text = getString(R.string.pause)
+        binding?.longBreakProgressbar?.max = time.toInt()
+        binding?.longBreakSkipButtom?.visibility = View.VISIBLE
+        binding?.longBreakStartTxt?.text = getString(R.string.pause)
     }
 
     private fun timerPause() {
         countDownTimer.cancel()
-        binding?.timerStartTxt?.text = getString(R.string.resume)
-        binding?.skipButtom?.visibility = View.GONE
+        binding?.longBreakStartTxt?.text = getString(R.string.resume)
+        binding?.longBreakSkipButtom?.visibility = View.GONE
         resumeEnable = true
         isRunning = false
     }
 
     private fun timerResume() {
         timer(timeLeft)
-        binding?.timerStartTxt?.text = getString(R.string.pause)
-        binding?.skipButtom?.visibility = View.VISIBLE
+        binding?.longBreakStartTxt?.text = getString(R.string.pause)
+        binding?.longBreakSkipButtom?.visibility = View.VISIBLE
         resumeEnable = false
-    }
-
-    private fun setTimeText (time: Int){
-        val timeFormat = String.format(Locale.getDefault(), "%02d:%02d", time, seconds)
-        binding?.timerTimer?.text = timeFormat
     }
 
     override fun onAttach(context: Context) {

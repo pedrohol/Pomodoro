@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.pomodoro.databinding.ActivityMainBinding
+import com.example.pomodoro.view.LongBreakFragment
+import com.example.pomodoro.view.SettingDialogFragment
+import com.example.pomodoro.view.ShortBreakFragment
+import com.example.pomodoro.view.TimerFragment
 
 class MainActivity : AppCompatActivity(), CycleController {
 

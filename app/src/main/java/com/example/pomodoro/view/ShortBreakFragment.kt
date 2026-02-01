@@ -1,4 +1,4 @@
-package com.example.pomodoro
+package com.example.pomodoro.view
 
 import android.content.Context
 import android.os.Bundle
@@ -6,18 +6,19 @@ import android.os.CountDownTimer
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.pomodoro.databinding.FragmentLongBreakBinding
+import com.example.pomodoro.CycleController
+import com.example.pomodoro.R
+import com.example.pomodoro.databinding.FragmentShortBreakBinding
 import java.util.Locale
 
-class LongBreakFragment: Fragment(R.layout.fragment_long_break) {
+class ShortBreakFragment: Fragment(R.layout.fragment_short_break) {
 
-    private var binding: FragmentLongBreakBinding? = null
-
+    private var binding: FragmentShortBreakBinding? = null
     private var cycleController: CycleController? = null
 
     private lateinit var countDownTimer: CountDownTimer
 
-    private var time: Int = 15
+    private var time: Int = 5
     private val seconds: Int = 0
     private var timeLeft: Long = 0
     private var timeProgress: Int = 0
@@ -27,14 +28,14 @@ class LongBreakFragment: Fragment(R.layout.fragment_long_break) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentLongBreakBinding.bind(view)
+        binding = FragmentShortBreakBinding.bind(view)
 
-        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.dark_blue)
+        activity?.window?.statusBarColor = ContextCompat.getColor(requireContext(), R.color.blue)
 
         val timeFormat = String.format(Locale.getDefault(), "%02d:%02d", time, seconds)
-        binding?.longBreakTimerTxt?.text = timeFormat
+        binding?.shortBreakTimerTxt?.text = timeFormat
 
-        binding?.longBreakStartTxt?.setOnClickListener {
+        binding?.shortBreakStartTxt?.setOnClickListener {
 
             if (!isRunning && !resumeEnable) {
                 timerStart(time)
@@ -45,7 +46,7 @@ class LongBreakFragment: Fragment(R.layout.fragment_long_break) {
             }
         }
 
-        binding?.longBreakSkipButtom?.setOnClickListener {
+        binding?.shortBreakSkipButtom?.setOnClickListener {
             countDownTimer.onFinish()
         }
     }
@@ -57,7 +58,7 @@ class LongBreakFragment: Fragment(R.layout.fragment_long_break) {
             override fun onTick(millisUntilFinished: Long) {
                 timeLeft = millisUntilFinished
                 timeProgress = millisUntilFinished.toInt()
-                binding?.longBreakProgressbar?.progress = timeProgress
+                binding?.shortBreakProgressbar?.progress = timeProgress
                 timeFormat(millisUntilFinished)
             }
 
@@ -71,30 +72,30 @@ class LongBreakFragment: Fragment(R.layout.fragment_long_break) {
         val minutes = (millisUntilFinished / 1000).toInt() / 60
         val seconds = (millisUntilFinished / 1000).toInt() % 60
         val timeFormated = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
-        binding?.longBreakTimerTxt?.text = timeFormated
+        binding?.shortBreakTimerTxt?.text = timeFormated
     }
 
-    private fun timerStart (minutes: Int) {
+    private fun timerStart(minutes: Int) {
         var time = (minutes * 60000).toLong()
         timer(time)
 
-        binding?.longBreakProgressbar?.max = time.toInt()
-        binding?.longBreakSkipButtom?.visibility = View.VISIBLE
-        binding?.longBreakStartTxt?.text = getString(R.string.pause)
+        binding?.shortBreakProgressbar?.max = time.toInt()
+        binding?.shortBreakSkipButtom?.visibility = View.VISIBLE
+        binding?.shortBreakStartTxt?.text = getString(R.string.pause)
     }
 
     private fun timerPause() {
         countDownTimer.cancel()
-        binding?.longBreakStartTxt?.text = getString(R.string.resume)
-        binding?.longBreakSkipButtom?.visibility = View.GONE
+        binding?.shortBreakStartTxt?.text = getString(R.string.resume)
+        binding?.shortBreakSkipButtom?.visibility = View.GONE
         resumeEnable = true
         isRunning = false
     }
 
     private fun timerResume() {
         timer(timeLeft)
-        binding?.longBreakStartTxt?.text = getString(R.string.pause)
-        binding?.longBreakSkipButtom?.visibility = View.VISIBLE
+        binding?.shortBreakStartTxt?.text = getString(R.string.pause)
+        binding?.shortBreakSkipButtom?.visibility = View.VISIBLE
         resumeEnable = false
     }
 
